@@ -1,0 +1,6 @@
+Flask==2.3.2          # Web framework for the backend
+Flask-CORS==3.0.10    # Enable Cross-Origin Resource Sharing for the frontend-backend interaction
+sqlite3               # SQLite database library (comes with Python)
+chart-studio==1.1.0   # Optional: For advanced charting (if needed)
+requests==2.31.0      # For API calls (if you want external data integrations)
+gunicorn==21.2.0      # For deployment (optional, useful for production servers)
