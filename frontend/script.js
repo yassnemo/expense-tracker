@@ -67,9 +67,37 @@ function updateTable() {
             <td>${expense.date}</td>
             <td>${expense.category}</td>
             <td>${expense.amount.toFixed(2)}</td>
+            <td><button class="delete-btn" data-id="${expense.id}">Delete</button></td>
         `;
         expenseTable.appendChild(row);
     });
+
+    // Add event listeners to delete buttons
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', handleDelete);
+    });
+}
+
+// Handle Deleting Expense
+function handleDelete(e) {
+    const id = e.target.getAttribute('data-id');
+    
+    fetch(`http://127.0.0.1:5000/delete_expense/${id}`, {
+        method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Remove the expense from the local array and update UI
+            expenses = expenses.filter(expense => expense.id !== parseInt(id));
+            updateTable();
+            updateChart();
+        } else {
+            alert('Error deleting expense: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error deleting expense:', error));
 }
 
 // Initialize Chart
