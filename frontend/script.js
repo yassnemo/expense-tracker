@@ -20,24 +20,30 @@ expenseForm.addEventListener('submit', (e) => {
     const category = document.getElementById('category').value;
     const amount = parseFloat(document.getElementById('amount').value);
 
-    if (date && category && !isNaN(amount)) {
-        const expense = { date, category, amount };
+    // Validation checks
+    const isAmountValid = isFinite(amount); // Check if amount is a valid number
+    const isDateValid = date.trim() !== ""; // Ensure date is not empty
+    const isCategoryValid = category.trim() !== ""; // Ensure category is not empty
 
-        // Add to local array
-        expenses.push(expense);
+     // If all fields are valid
+    if (isDateValid && isCategoryValid && isAmountValid) {
+      const expense = { date, category, amount };
 
-        // Save to localStorage
-        localStorage.setItem('expenses', JSON.stringify(expenses));
+      // Add to local array
+      expenses.push(expense);
 
-        // Update UI
-        updateTable();
-        updateChart();
+      // Save to localStorage
+      localStorage.setItem('expenses', JSON.stringify(expenses));
 
-        // Clear the form
-        expenseForm.reset();
+      // Update UI
+      updateTable();
+      updateChart();
+
+      // Clear the form
+      expenseForm.reset();
     } else {
-        alert('Please fill out all fields!');
-    }
+      alert('Please fill out all fields with valid data!');
+  }
 });
 
 // Function to update the table
