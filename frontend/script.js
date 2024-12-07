@@ -38,15 +38,13 @@ expenseForm.addEventListener('submit', (e) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                console.log(data); // Log the response
                 if (data.status === 'success') {
                     // Add to local array and update UI
-                    expenses.push(expense);
+                    expenses.push({ ...expense, id: expenses.length + 1 }); // Temporary ID
                     updateTable();
                     updateChart();
-
-                    // Clear Form
-                    expenseForm.reset();
+                    expenseForm.reset(); // Clear the form
                 } else {
                     alert('Error adding expense: ' + data.message);
                 }
@@ -56,6 +54,7 @@ expenseForm.addEventListener('submit', (e) => {
         alert('Please fill out all fields!');
     }
 });
+
 
 // Update Table
 function updateTable() {
