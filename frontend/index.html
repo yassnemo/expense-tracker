@@ -5,45 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
 </head>
 <body>
-    <div class="container">
-        <h1>Expense Tracker</h1>
-        
-        <!-- Expense Form -->
-        <form id="expense-form">
-            <label for="date">Date:</label>
-            <input type="date" id="date" required>
-            
-            <label for="category">Category:</label>
-            <input type="text" id="category" placeholder="e.g., Food, Rent" required>
-            
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" placeholder="e.g., 50" required>
-            
-            <button type="submit">Add Expense</button>
-        </form>
-        
-        <!-- Expense Table -->
-        <h2>Expense Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody id="expense-table">
-                <!-- Rows will be dynamically added here -->
-            </tbody>
-        </table>
-        
-        <!-- Chart Section -->
-        <h2>Expense Visualization</h2>
-        <canvas id="expenseChart"></canvas>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <h1>Expense Tracker</h1>
+
+    <form id="expense-form">
+        <input type="date" id="date" required>
+        <input type="text" id="category" placeholder="Category" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <button type="submit">Add Expense</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody id="expense-table-body">
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <canvas id="expense-chart" width="400" height="200"></canvas> <!-- Chart container -->
+
     <script src="script.js"></script>
 </body>
 </html>
