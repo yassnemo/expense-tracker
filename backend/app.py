@@ -24,10 +24,10 @@ def init_db():
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     try:
-        data = request.json
-        date = data.get('date')
-        category = data.get('category')
-        amount = data.get('amount')
+        data = request.get_json()
+        date = data['date']
+        category = data['category']
+        amount = data['amount']
 
         conn = sqlite3.connect('database.db')
         cursor = conn.cursor()
@@ -35,10 +35,10 @@ def add_expense():
         conn.commit()
         conn.close()
 
-        return jsonify({"status": "success", "message": "Expense added successfully"}), 201
+        return jsonify({"status": "success", "message": "Expense added successfully"}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
-
+    
 # Route: Get All Expenses
 @app.route('/get_expenses', methods=['GET'])
 def get_expenses():
