@@ -2,9 +2,11 @@
 const expenseForm = document.getElementById('expense-form');
 const expenseTable = document.getElementById('expense-table-body');
 const chartCanvas = document.getElementById('expense-chart'); // Chart container
+const clearDataBtn = document.getElementById('clear-data-btn');
+const confirmClearBtn = document.getElementById('confirm-clear-btn');
 
-// Expenses array to hold added expenses
-const expenses = [];
+// Load expenses from localStorage or initialize as empty
+let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
 
 // Chart instance (will be initialized later)
 let expenseChart;
@@ -23,6 +25,9 @@ expenseForm.addEventListener('submit', (e) => {
 
         // Add to local array
         expenses.push(expense);
+
+        // Save to localStorage
+        localStorage.setItem('expenses', JSON.stringify(expenses));
 
         // Update UI
         updateTable();
@@ -73,8 +78,7 @@ function initializeChart() {
                     display: true
                 }
             }
-        }
-    });
+        });
 }
 
 // Function to update the chart
@@ -92,5 +96,35 @@ function updateChart() {
     expenseChart.update();
 }
 
+// Function to handle clearing data with confirmation
+function handleClearData() {
+    confirmClearBtn.style.display = 'inline-block'; // Show confirmation button
+    clearDataBtn.style.display = 'none'; // Hide the "Clear Data" button
+}
+
+// Function to confirm clearing data
+function confirmClear() {
+    // Clear all expenses from localStorage
+    localStorage.removeItem('expenses');
+    expenses = [];
+
+    // Update the UI
+    updateTable();
+    updateChart();
+
+    // Hide confirmation button and show the original button again
+    confirmClearBtn.style.display = 'none';
+    clearDataBtn.style.display = 'inline-block';
+}
+
 // Initialize the chart when the page loads
-document.addEventListener('DOMContentLoaded', initializeChart);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeChart();
+    updateTable();
+    
+    // Event listener for "Clear Data" button
+    clearDataBtn.addEventListener('click', handleClearData);
+
+    // Event listener for "Confirm Clear Data" button
+    confirmClearBtn.addEventListener('click', confirmClear);
+});
