@@ -78,7 +78,8 @@ function initializeChart() {
                     display: true
                 }
             }
-        });
+        } // <-- Closing the chart configuration here
+    }); // <-- Closing the Chart constructor here
 }
 
 // Function to update the chart
@@ -91,9 +92,10 @@ function updateChart() {
     const labels = Object.keys(categories);
     const data = Object.values(categories);
 
+    // Update chart labels and data
     expenseChart.data.labels = labels;
     expenseChart.data.datasets[0].data = data;
-    expenseChart.update();
+    expenseChart.update(); // Ensure the chart is re-rendered
 }
 
 // Function to handle clearing data with confirmation
