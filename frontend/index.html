@@ -16,7 +16,7 @@
         <input type="number" id="amount" placeholder="Amount" required>
         <button type="submit">Add Expense</button>
     </form>
-
+    
     <button id="clear-data-btn">Clear Data</button>
     <button id="confirm-clear-btn" style="display: none;">Confirm Clear Data</button>
 
@@ -34,6 +34,11 @@
     </table>
 
     <canvas id="expense-chart" width="400" height="200"></canvas> <!-- Chart container -->
+
+    <!-- Category Pie Chart (SVG circle) -->
+    <div id="category-pie-container" style="margin-top: 20px;">
+        <svg id="category-pie-chart" width="200" height="200" viewBox="0 0 32 32"></svg>
+    </div>
 
     <script src="script.js"></script>
 </body>

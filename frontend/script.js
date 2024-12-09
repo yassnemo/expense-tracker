@@ -1,9 +1,10 @@
-// Ensure references to DOM elements are correct
+// Ensure references to DOM elements are correct 
 const expenseForm = document.getElementById('expense-form');
 const expenseTable = document.getElementById('expense-table-body');
 const chartCanvas = document.getElementById('expense-chart'); // Chart container
 const clearDataBtn = document.getElementById('clear-data-btn');
 const confirmClearBtn = document.getElementById('confirm-clear-btn');
+const categoryPieChart = document.getElementById('category-pie-chart'); // SVG Pie Chart container
 
 // Load expenses from localStorage or initialize as empty
 let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
@@ -25,25 +26,26 @@ expenseForm.addEventListener('submit', (e) => {
     const isDateValid = date.trim() !== ""; // Ensure date is not empty
     const isCategoryValid = category.trim() !== ""; // Ensure category is not empty
 
-     // If all fields are valid
+    // If all fields are valid
     if (isDateValid && isCategoryValid && isAmountValid) {
-      const expense = { date, category, amount };
+        const expense = { date, category, amount };
 
-      // Add to local array
-      expenses.push(expense);
+        // Add to local array
+        expenses.push(expense);
 
-      // Save to localStorage
-      localStorage.setItem('expenses', JSON.stringify(expenses));
+        // Save to localStorage
+        localStorage.setItem('expenses', JSON.stringify(expenses));
 
-      // Update UI
-      updateTable();
-      updateChart();
+        // Update UI
+        updateTable();
+        updateChart();
+        updatePieChart();
 
-      // Clear the form
-      expenseForm.reset();
+        // Clear the form
+        expenseForm.reset();
     } else {
-      alert('Please fill out all fields with valid data!');
-  }
+        alert('Please fill out all fields with valid data!');
+    }
 });
 
 // Function to update the table
@@ -72,7 +74,7 @@ function initializeChart() {
             datasets: [{
                 label: 'Expenses',
                 data: [], // Amounts
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: [],
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
@@ -84,8 +86,8 @@ function initializeChart() {
                     display: true
                 }
             }
-        } // <-- Closing the chart configuration here
-    }); // <-- Closing the Chart constructor here
+        }
+    });
 }
 
 // Function to update the chart
@@ -98,10 +100,63 @@ function updateChart() {
     const labels = Object.keys(categories);
     const data = Object.values(categories);
 
-    // Update chart labels and data
+    // Generate random colors for each category
+    const colors = labels.map(() => getRandomColor());
+
+    // Update chart data
     expenseChart.data.labels = labels;
     expenseChart.data.datasets[0].data = data;
+    expenseChart.data.datasets[0].backgroundColor = colors;
     expenseChart.update(); // Ensure the chart is re-rendered
+}
+
+// Function to Generate Random Colors
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Function to update the Pie Chart (SVG Circle)
+function updatePieChart() {
+    const categories = {};
+    expenses.forEach(expense => {
+        categories[expense.category] = (categories[expense.category] || 0) + expense.amount;
+    });
+
+    const totalAmount = Object.values(categories).reduce((acc, amount) => acc + amount, 0);
+    let startAngle = 0;
+
+    // Clear existing chart
+    categoryPieChart.innerHTML = '';
+
+    // Create slices for each category
+    Object.keys(categories).forEach((category, index) => {
+        const categoryAmount = categories[category];
+        const sliceAngle = (categoryAmount / totalAmount) * 360;
+        const sliceColor = getRandomColor();
+
+        // Create the SVG slice (path)
+        const x1 = 16 + 16 * Math.cos(Math.PI * startAngle / 180);
+        const y1 = 16 + 16 * Math.sin(Math.PI * startAngle / 180);
+        const x2 = 16 + 16 * Math.cos(Math.PI * (startAngle + sliceAngle) / 180);
+        const y2 = 16 + 16 * Math.sin(Math.PI * (startAngle + sliceAngle) / 180);
+
+        const largeArcFlag = sliceAngle > 180 ? 1 : 0;
+
+        const pathData = `M 16,16 L ${x1},${y1} A 16,16 0 ${largeArcFlag} 1 ${x2},${y2} Z`;
+
+        const slice = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        slice.setAttribute('d', pathData);
+        slice.setAttribute('fill', sliceColor);
+
+        categoryPieChart.appendChild(slice);
+
+        startAngle += sliceAngle;
+    });
 }
 
 // Function to handle clearing data with confirmation
@@ -119,6 +174,7 @@ function confirmClear() {
     // Update the UI
     updateTable();
     updateChart();
+    updatePieChart();
 
     // Hide confirmation button and show the original button again
     confirmClearBtn.style.display = 'none';
@@ -129,7 +185,9 @@ function confirmClear() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeChart();
     updateTable();
-    
+    updateChart();
+    updatePieChart();
+
     // Event listener for "Clear Data" button
     clearDataBtn.addEventListener('click', handleClearData);
 
