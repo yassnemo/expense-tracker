@@ -33,11 +33,14 @@
         </tbody>
     </table>
 
-    <canvas id="expense-chart" width="400" height="200"></canvas> <!-- Chart container -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <!-- Chart container -->
+        <canvas id="expense-chart" width="400" height="200"></canvas> 
 
-    <!-- Category Pie Chart (SVG circle) -->
-    <div id="category-pie-container" style="margin-top: 20px;">
-        <svg id="category-pie-chart" width="200" height="200" viewBox="0 0 32 32"></svg>
+        <!-- Category Legend Circle -->
+        <div id="category-pie-container" style="margin-top: 20px; width: 200px; height: 200px;">
+            <svg id="category-pie-chart" width="200" height="200" viewBox="0 0 32 32"></svg>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -21,40 +21,38 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 500px;
+    max-width: 700px;
     margin: 0 auto 20px;
     display: flex;
-    gap: 15px;
     flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
 }
 
-form input, form button {
+form input {
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
+    width: calc(33.33% - 10px); /* Adjust for 3 equal-width columns */
     box-sizing: border-box;
     margin-bottom: 10px;
 }
 
 form button {
+    width: calc(33.33% - 10px); /* Same width as inputs */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     background-color: #4CAF50; /* Green */
     color: white;
-    border: none;
     cursor: pointer;
+    margin-bottom: 10px;
 }
 
 form button:hover {
     background-color: #45a049; /* Darker green on hover */
-}
-
-form input[type="number"] {
-    width: 48%;
-}
-
-form input[type="text"], form input[type="date"] {
-    width: 48%;
 }
 
 /* Table Styling */
@@ -94,15 +92,48 @@ tbody tr:hover {
     max-width: 800px;
 }
 
+/* Category Pie Container */
+#category-pie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 200px;
+    height: 200px;
+}
+
+/* Category Circle Styling */
+.category-legend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.category-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.category-text {
+    font-size: 14px;
+}
+
 /* Responsiveness */
 @media screen and (max-width: 768px) {
     form {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
 
-    form input, form button {
-        width: 100%;
+    form input {
+        width: 100%; /* Full width for small screens */
+    }
+
+    form button {
+        width: 100%; /* Full width for small screens */
+        margin-top: 20px;
     }
 
     table {
@@ -113,5 +144,10 @@ tbody tr:hover {
     #expense-chart {
         width: 100%;
         height: 300px;
+    }
+
+    #category-pie-container {
+        margin-top: 20px;
+        text-align: center;
     }
 }

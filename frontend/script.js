@@ -1,4 +1,4 @@
-// Ensure references to DOM elements are correct 
+// Ensure references to DOM elements are correct  
 const expenseForm = document.getElementById('expense-form');
 const expenseTable = document.getElementById('expense-table-body');
 const chartCanvas = document.getElementById('expense-chart'); // Chart container
@@ -120,7 +120,6 @@ function getRandomColor() {
     return color;
 }
 
-// Function to update the Pie Chart (SVG Circle)
 function updatePieChart() {
     const categories = {};
     expenses.forEach(expense => {
@@ -134,30 +133,53 @@ function updatePieChart() {
     categoryPieChart.innerHTML = '';
 
     // Create slices for each category
-    Object.keys(categories).forEach((category, index) => {
+    Object.keys(categories).forEach((category) => {
         const categoryAmount = categories[category];
         const sliceAngle = (categoryAmount / totalAmount) * 360;
         const sliceColor = getRandomColor();
 
-        // Create the SVG slice (path)
-        const x1 = 16 + 16 * Math.cos(Math.PI * startAngle / 180);
-        const y1 = 16 + 16 * Math.sin(Math.PI * startAngle / 180);
-        const x2 = 16 + 16 * Math.cos(Math.PI * (startAngle + sliceAngle) / 180);
-        const y2 = 16 + 16 * Math.sin(Math.PI * (startAngle + sliceAngle) / 180);
+        // Pie slice coordinates
+        const x1 = 50 + 50 * Math.cos(Math.PI * startAngle / 180);
+        const y1 = 50 + 50 * Math.sin(Math.PI * startAngle / 180);
+        const x2 = 50 + 50 * Math.cos(Math.PI * (startAngle + sliceAngle) / 180);
+        const y2 = 50 + 50 * Math.sin(Math.PI * (startAngle + sliceAngle) / 180);
 
         const largeArcFlag = sliceAngle > 180 ? 1 : 0;
 
-        const pathData = `M 16,16 L ${x1},${y1} A 16,16 0 ${largeArcFlag} 1 ${x2},${y2} Z`;
+        const pathData = `M 50,50 L ${x1},${y1} A 50,50 0 ${largeArcFlag} 1 ${x2},${y2} Z`;
 
+        // Create SVG path for the slice
         const slice = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         slice.setAttribute('d', pathData);
         slice.setAttribute('fill', sliceColor);
 
         categoryPieChart.appendChild(slice);
 
+        // Calculate percentage
+        const percentage = ((categoryAmount / totalAmount) * 100).toFixed(1);
+
+        // Calculate label position (midpoint of the slice angle)
+        const midAngle = startAngle + sliceAngle / 2;
+        const labelX = 50 + 30 * Math.cos(Math.PI * midAngle / 180); // 30 is radius for labels
+        const labelY = 50 + 30 * Math.sin(Math.PI * midAngle / 180);
+
+        // Create text label for percentage
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', labelX);
+        text.setAttribute('y', labelY);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'middle');
+        text.setAttribute('font-size', '8'); // Small enough to fit but readable
+        text.setAttribute('fill', 'black');
+        text.textContent = `${percentage}%`;
+
+        categoryPieChart.appendChild(text);
+
+        // Update start angle for next slice
         startAngle += sliceAngle;
     });
 }
+
 
 // Function to handle clearing data with confirmation
 function handleClearData() {
