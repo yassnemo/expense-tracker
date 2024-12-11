@@ -23,25 +23,33 @@ The **Expense Tracker** is a user-friendly web application that's designed to he
 
 ## Installation
 
-1. **Clone or Download the Repository**  
+1. **Clone or Download the Repository**
+   
    To get started, clone or download this repository to a local directory:
    ```bash
    git clone https://github.com/your-username/expense-tracker.git
-2. Open the Application
+   
+3. Open the Application
+   
   Navigate to the project folder and open the index.html file in your browser to use the application.
 
 ## How It Works
  
 - Add an Expense:
+  
     - Fill out the form with the expense details (date, category, and amount). Once submitted, the data is saved in localStorage (On your web browser), and the table and charts are updated in real-time.
 
 - View Expenses:
+
     - All expenses are displayed in a detailed table, showing their respective date, category, and amount.
 
 - Visualize Data:
+  
     - The Bar Chart illustrates the total expenses by category.
     - The Pie Chart shows the percentage breakdown of spending for each category, providing a clear snapshot of your financial distribution.
+      
 - Clear Data:
+  
     - Clicking the "Clear Data" button prompts a confirmation dialog. Upon confirmation, all stored data is deleted, and the application resets.
       
 ## Screenshots
@@ -50,32 +58,39 @@ The **Expense Tracker** is a user-friendly web application that's designed to he
 ![Screenshot 2024-12-11 132645](https://github.com/user-attachments/assets/192c6b98-9f3a-4115-9ede-31eb96160b28)
 
 ## Contribution
+
  If you have ideas for new features or want to fix bugs, feel free to submit a pull request. Here's how you can contribute:
 
 1. Fork the Repository
+   
    Click the "Fork" button on the repository page.
 
-2. Create a New Branch
+3. Create a New Branch
+   
   Create a feature branch for your changes:
 ```bash
 git checkout -b feature-name
 ```
 3. Commit Your Changes
+   
   After making changes, commit them with a clear message:
 ```bash
 git commit -m "Add description of changes"
 ```
 4. Push and Create a Pull Request
+   
   Push your changes and create a pull request:
 ```bash
 git push origin feature-name
 ```
 ## Future Enhancements
+
 - Add the ability to filter expenses by date or category.
 - Enable exporting data to a file for offline access.
 - Introduce user authentication for cross-device data access.
 
 ## Conclusion
+
 This project showcases a good understanding of front-end development and data visualization. It combines practical functionality with a simple design, making it very useful for managing finances or exploring coding concepts in a real-world web applications.
 
 
