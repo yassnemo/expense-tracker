@@ -132,6 +132,16 @@ function updatePieChart() {
     // Clear existing chart
     categoryPieChart.innerHTML = '';
 
+    // Updated SVG size and radius
+    const svgSize = 800; // Updated size
+    const radius = 200;  // Updated radius
+    const center = svgSize / 2;
+
+    // Set the SVG viewBox dynamically
+    categoryPieChart.setAttribute('viewBox', `0 0 ${svgSize} ${svgSize}`);
+    categoryPieChart.setAttribute('width', svgSize);
+    categoryPieChart.setAttribute('height', svgSize);
+
     // Create slices for each category
     Object.keys(categories).forEach((category) => {
         const categoryAmount = categories[category];
@@ -139,14 +149,14 @@ function updatePieChart() {
         const sliceColor = getRandomColor();
 
         // Pie slice coordinates
-        const x1 = 50 + 50 * Math.cos(Math.PI * startAngle / 180);
-        const y1 = 50 + 50 * Math.sin(Math.PI * startAngle / 180);
-        const x2 = 50 + 50 * Math.cos(Math.PI * (startAngle + sliceAngle) / 180);
-        const y2 = 50 + 50 * Math.sin(Math.PI * (startAngle + sliceAngle) / 180);
+        const x1 = center + radius * Math.cos(Math.PI * startAngle / 180);
+        const y1 = center + radius * Math.sin(Math.PI * startAngle / 180);
+        const x2 = center + radius * Math.cos(Math.PI * (startAngle + sliceAngle) / 180);
+        const y2 = center + radius * Math.sin(Math.PI * (startAngle + sliceAngle) / 180);
 
         const largeArcFlag = sliceAngle > 180 ? 1 : 0;
 
-        const pathData = `M 50,50 L ${x1},${y1} A 50,50 0 ${largeArcFlag} 1 ${x2},${y2} Z`;
+        const pathData = `M ${center},${center} L ${x1},${y1} A ${radius},${radius} 0 ${largeArcFlag} 1 ${x2},${y2} Z`;
 
         // Create SVG path for the slice
         const slice = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -160,8 +170,8 @@ function updatePieChart() {
 
         // Calculate label position (midpoint of the slice angle)
         const midAngle = startAngle + sliceAngle / 2;
-        const labelX = 50 + 30 * Math.cos(Math.PI * midAngle / 180); // 30 is radius for labels
-        const labelY = 50 + 30 * Math.sin(Math.PI * midAngle / 180);
+        const labelX = center + (radius + 20) * Math.cos(Math.PI * midAngle / 180);
+        const labelY = center + (radius + 20) * Math.sin(Math.PI * midAngle / 180);
 
         // Create text label for percentage
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -169,7 +179,7 @@ function updatePieChart() {
         text.setAttribute('y', labelY);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('dominant-baseline', 'middle');
-        text.setAttribute('font-size', '8'); // Small enough to fit but readable
+        text.setAttribute('font-size', '14'); // Adjusted for larger text
         text.setAttribute('fill', 'black');
         text.textContent = `${percentage}%`;
 
@@ -179,7 +189,6 @@ function updatePieChart() {
         startAngle += sliceAngle;
     });
 }
-
 
 // Function to handle clearing data with confirmation
 function handleClearData() {

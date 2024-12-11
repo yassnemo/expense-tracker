@@ -88,8 +88,9 @@ tbody tr:hover {
 /* Chart Styling */
 #expense-chart {
     display: block;
-    margin: 40px auto 0;
-    max-width: 800px;
+    margin: 20px auto;
+    max-width: 600px;
+    height: 300px;
 }
 
 /* Category Pie Container */
@@ -98,8 +99,13 @@ tbody tr:hover {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
+}
+
+#category-pie-chart {
+    width: 100%;
+    height: 100%;
 }
 
 /* Category Circle Styling */
@@ -118,6 +124,14 @@ tbody tr:hover {
 
 .category-text {
     font-size: 14px;
+}
+
+/* Percentage Text Styling */
+.pie-chart-percentage {
+    font-size: 12px;
+    fill: #333;
+    text-anchor: middle;
+    dominant-baseline: middle;
 }
 
 /* Responsiveness */
@@ -143,11 +157,15 @@ tbody tr:hover {
 
     #expense-chart {
         width: 100%;
-        height: 300px;
+        height: 200px;
     }
 
     #category-pie-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         margin-top: 20px;
-        text-align: center;
+        width: 400px;  /* Match the updated SVG size */
+        height: 400px; /* Match the updated SVG size */
     }
 }
