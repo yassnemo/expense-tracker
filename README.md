@@ -27,7 +27,7 @@ The **Expense Tracker** is a user-friendly web application that's designed to he
    
    To get started, clone or download this repository to a local directory:
    ```bash
-   git clone https://github.com/your-username/expense-tracker.git
+   git clone https://github.com/yassnemo/expense-tracker.git
    
 3. Open the Application
    
